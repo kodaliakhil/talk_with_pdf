@@ -1,7 +1,9 @@
 # Tools Used
-- Clerk: For Authentication
-- Neon DB: Serverless Postgres for Database
-- DrizzleORM: Query builder
+- Clerk: For Authentication.
+- Neon DB: Serverless Postgres for Database.
+- DrizzleORM: Query builder.
+- AWS S3: For file upload functionality.
+- @tanstack/react-query: For asyncronous State management
 
 
 
