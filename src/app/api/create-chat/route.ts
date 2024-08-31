@@ -1,12 +1,14 @@
 // /api/create-chat
 
+import { loadS3IntoPinecone } from "@/lib/pinecone";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request, res: Response) {
   try {
     const body = await req.json();
     const { file_key, file_name } = body;
-    return NextResponse.json({ message: "File uploaded successfully" });
+    const pages = await loadS3IntoPinecone(file_key);
+    return NextResponse.json({ message: "File uploaded successfully", pages });
   } catch (error) {
     console.log("Error in api create-chat -> POST: ", error);
     return NextResponse.json(

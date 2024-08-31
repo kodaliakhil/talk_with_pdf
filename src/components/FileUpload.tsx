@@ -43,11 +43,12 @@ const FileUpload = () => {
         // const plainData = JSON.parse(JSON.stringify(data));
         mutate([data.file_key, data.file_name], {
           onSuccess: (data) => {
+            console.log(data);
             toast.success(data.message);
           },
           onError: (error) => {
             toast.error("Error while creating chat");
-            console.log("Error in FileUpload.tsx -> mutate -> onError:",error);
+            console.log("Error in FileUpload.tsx -> mutate -> onError:", error);
           },
         });
       } catch (error) {
