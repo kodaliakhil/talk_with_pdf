@@ -3,9 +3,9 @@ import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
-import { LogIn } from 'lucide-react';
+import { LogIn } from "lucide-react";
 import FileUpload from "@/components/FileUpload";
-
+import { getEmbeddingsSample } from "@/lib/embeddings";
 
 export default function Home() {
   const { userId } = auth();
@@ -19,7 +19,13 @@ export default function Home() {
             <UserButton /> {/* afterSignOutUrl is deprecated */}
           </div>
           <div className="flex mt-2">
-            {isAuth && <Button>Go to Chats</Button>}
+            {isAuth && (
+              <Button
+              //  onClick={getEmbeddingsSample}
+              >
+                Go to Chats
+              </Button>
+            )}
           </div>
           <p className="max-w-xl mt-1 text-lg text-slate-600">
             Join millions of students, reserchers, and professionals to
@@ -27,13 +33,13 @@ export default function Home() {
           </p>
           <div className="w-full mt-4">
             {isAuth ? (
-              <FileUpload/>
+              <FileUpload />
             ) : (
               <Link href={"/sign-in"}>
-                <Button>Login to get Started!
-                  <LogIn className="w-4 h-4 ml-2"/>
+                <Button>
+                  Login to get Started!
+                  <LogIn className="w-4 h-4 ml-2" />
                 </Button>
-
               </Link>
             )}
           </div>

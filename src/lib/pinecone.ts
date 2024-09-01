@@ -5,6 +5,10 @@ import {
   Document,
   RecursiveCharacterTextSplitter,
 } from "@pinecone-database/doc-splitter";
+import { getEmbeddings } from "./embeddings";
+import md5 from "md5";
+import { Vector } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch/data";
+import { convertToAscii } from "./utils";
 
 let pinecone: Pinecone | null = null;
 
@@ -40,9 +44,34 @@ export async function loadS3IntoPinecone(fileKey: string) {
   // documents is an array of pages being split into segments from the PDF we uploaded i.e if we upload 13 pages PDF it may become an Array(100) documents
 
   // 3. vectorise and embed individual documents
+  const vectors = await Promise.all(documents.flat().map(embedDocument));
+  console.log(vectors);
+  // 4. Upload to Pinecone
+  // const client = await getPineconeClient();
+  // const pineconeIndex = client.Index("chat-pdf");
+  // console.log("Inserting vectors into Pinecone");
+  // const namespace = convertToAscii(fileKey);
+  // await pineconeIndex.namespace(namespace).upsert(vectors)
 }
 
-// async function embedDocument
+async function embedDocument(doc: Document) {
+  try {
+    const embeddings = await getEmbeddings(doc.pageContent);
+    const hash = md5(doc.pageContent);
+
+    return {
+      id: hash,
+      values: embeddings,
+      metadata: {
+        text: doc.metadata.text,
+        pageNumber: doc.metadata.pageNumber,
+      },
+    } as Vector;
+  } catch (error) {
+    console.log("error while embedding", error);
+    throw error;
+  }
+}
 
 export const truncateStringByBytes = (str: string, bytes: number) => {
   const enc = new TextEncoder();
