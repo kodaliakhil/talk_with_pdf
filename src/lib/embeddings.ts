@@ -1,7 +1,8 @@
-// "use client";
+"use client";
 // import { OpenAIApi, Configuration } from "openai-edge";
 // import OpenAI from "openai";
 import { pipeline } from "@xenova/transformers";
+import { getEmbeddingsSample } from "./generateEmbeddings";
 
 // const config = new Configuration({
 //   apiKey: process.env.NEXT_PUBLIC_OPEN_AI_API_KEY,
@@ -23,39 +24,12 @@ export async function getEmbeddings(text: string) {
     //   input: text.replace(/\n/g, ""),
     //   encoding_format: "float",
     // });
-    const generateEmbeddings = await pipeline(
-      "feature-extraction",
-      "Xenova/all-MiniLM-L6-v2"
-    );
-    const result = await generateEmbeddings(text.replace(/\n/g, ""), {
-      pooling: "mean",
-      normalize: true,
-    });
-
-    // const result = await response.json();
-    console.log(
-      "--------------------------------",
-      result,
-      "--------------------------------"
-    );
-    return result.data[0].embedding as number[];
-  } catch (error) {
-    console.log("error while getting embeddings (lib -> embeddings.ts)", error);
-    throw error;
-  }
-}
-
-export async function getEmbeddingsSample() {
-  try {
-    
-    const generateEmbeddings = await pipeline(
-      "feature-extraction",
-      "Xenova/all-MiniLM-L6-v2"
-    );
-    const result = await generateEmbeddings("This is a simple test.", {
-      pooling: "mean",
-      normalize: true,
-    });
+    // const generateEmbeddings = await pipeline(
+    //   "feature-extraction",
+    //   "Xenova/all-MiniLM-L6-v2"
+    // );
+    // console.log(text.replace(/\n/g, ""))
+    const result = await getEmbeddingsSample(text.replace(/\n/g, ""));
 
     // const result = await response.json();
     console.log(
@@ -68,4 +42,6 @@ export async function getEmbeddingsSample() {
     console.log("error while getting embeddings (lib -> embeddings.ts)", error);
     throw error;
   }
-} 
+}
+
+

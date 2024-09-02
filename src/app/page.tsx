@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
 import FileUpload from "@/components/FileUpload";
-import { getEmbeddingsSample } from "@/lib/embeddings";
+import { getEmbeddingsSample } from "@/lib/generateEmbeddings";
+import ChatsButton from "@/components/ChatsButton";
 
 export default function Home() {
   const { userId } = auth();
@@ -18,15 +19,7 @@ export default function Home() {
             <h1 className="mr-3 text-5xl font-semibold">Chat with any PDF</h1>
             <UserButton /> {/* afterSignOutUrl is deprecated */}
           </div>
-          <div className="flex mt-2">
-            {isAuth && (
-              <Button
-              //  onClick={getEmbeddingsSample}
-              >
-                Go to Chats
-              </Button>
-            )}
-          </div>
+          <div className="flex mt-2">{isAuth && <ChatsButton />}</div>
           <p className="max-w-xl mt-1 text-lg text-slate-600">
             Join millions of students, reserchers, and professionals to
             instantly answer questions and understand reserceh with AI.

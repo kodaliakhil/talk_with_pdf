@@ -7,6 +7,9 @@ import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { getEmbeddings } from "@/lib/embeddings";
+import md5 from "md5";
+import { Document } from "@pinecone-database/doc-splitter";
 
 const FileUpload = () => {
   const router = useRouter();
@@ -20,9 +23,32 @@ const FileUpload = () => {
         file_key,
         file_name,
       });
+      const documents = response.data.documents;
+      console.log("------------------ documents -----------------", documents)
+      const vectors = await Promise.all(documents.flat().map(embedDocument));
+
       return response.data;
     },
   });
+  async function embedDocument(doc: Document) {
+    try {
+      const embeddings = await getEmbeddings(doc.pageContent);
+      const hash = md5(doc.pageContent);
+
+      // return {
+      //   id: hash,
+      //   values: embeddings,
+      //   metadata: {
+      //     text: doc.metadata.text,
+      //     pageNumber: doc.metadata.pageNumber,
+      //   },
+      // } as Vector;
+    } catch (error) {
+      console.log("error while embedding", error);
+      throw error;
+    }
+  }
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
@@ -46,7 +72,7 @@ const FileUpload = () => {
         mutate([data.file_key, data.file_name], {
           onSuccess: ({ chat_id }) => {
             toast.success("Chat created!");
-            router.push(`/chat/${chat_id}`);
+            // router.push(`/chat/${chat_id}`);
           },
           onError: (error) => {
             toast.error("Error while creating chat");
