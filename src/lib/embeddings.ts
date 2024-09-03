@@ -37,7 +37,7 @@ export async function getEmbeddings(text: string) {
       result,
       "--------------------------------"
     );
-    // return result.data[0].embedding as number[];
+    return result as number[];
   } catch (error) {
     console.log("error while getting embeddings (lib -> embeddings.ts)", error);
     throw error;
