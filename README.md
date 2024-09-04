@@ -4,13 +4,13 @@
 - DrizzleORM: Query builder.
 - AWS S3: For file upload functionality.
 - @tanstack/react-query: For asyncronous State management
-- pinecone: Vector database
+- pinecone: Vector database.
 - langchain: For loading PDF and Read the text of the PDF.
 
 
 
-`npx drizzle-kit push` for migrating the models to DB
-`npx drizzle-kit studio` to view the data
+`npx drizzle-kit push` for migrating the models to DB.
+`npx drizzle-kit studio` to view the data.
 
 
 # AWS S3 creation
