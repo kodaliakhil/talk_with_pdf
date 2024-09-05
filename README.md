@@ -3,7 +3,7 @@
 - Neon DB: Serverless Postgres for Database.
 - DrizzleORM: Query builder.
 - AWS S3: For file upload functionality.
-- @tanstack/react-query: For asyncronous State management
+- @tanstack/react-query: For asyncronous State management.
 - pinecone: Vector database.
 - langchain: For loading PDF and Read the text of the PDF.
 
