@@ -43,6 +43,7 @@ const FileUpload = () => {
 
       // 4. Upload to Pinecone
       //Getting error while uploading to pinecone
+      // Need to find another database for vectors
       // Access to fetch at 'https://chat-pdf-cmf7ac9.svc.aped-4627-b74a.pinecone.io/vectors/upsert' from origin 'http://localhost:3000' has been blocked by CORS policy: Request header field x-pinecone-api-version is not allowed by Access-Control-Allow-Headers in preflight response.
       // const client = await getPineconeClient();
       // const pineconeIndex = client.Index("chat-pdf");
