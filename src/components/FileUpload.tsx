@@ -11,18 +11,7 @@ import { getEmbeddings } from "@/lib/embeddings";
 import md5 from "md5";
 import { Document } from "@pinecone-database/doc-splitter";
 import { Vector } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch/data";
-// import { Pinecone } from "@pinecone-database/pinecone";
-// import { convertToAscii } from "@/lib/utils";
-
-// let pinecone: Pinecone | null = null;
-// export const getPineconeClient = () => {
-//   if (!pinecone) {
-//     pinecone = new Pinecone({
-//       apiKey: process.env.NEXT_PUBLIC_PINECONE_API_KEY!,
-//     });
-//   }
-//   return pinecone;
-// };
+import { PineconeRecord } from "@pinecone-database/pinecone";
 
 const FileUpload = () => {
   const router = useRouter();
@@ -37,19 +26,17 @@ const FileUpload = () => {
         file_name,
       });
       const documents = response.data.documents;
-      console.log("------------------ documents -----------------", documents);
       const vectors = await Promise.all(documents.flat().map(embedDocument));
-      console.log("------------------ Vectors -----------------", vectors);
 
-      // 4. Upload to Pinecone
-      //Getting error while uploading to pinecone
-      // Need to find another database for vectors
-      // Access to fetch at 'https://chat-pdf-cmf7ac9.svc.aped-4627-b74a.pinecone.io/vectors/upsert' from origin 'http://localhost:3000' has been blocked by CORS policy: Request header field x-pinecone-api-version is not allowed by Access-Control-Allow-Headers in preflight response.
-      // const client = await getPineconeClient();
-      // const pineconeIndex = client.Index("chat-pdf");
-      // console.log("Inserting vectors into Pinecone");
-      // const namespace = convertToAscii(file_key);
-      // await pineconeIndex.namespace(namespace).upsert(vectors);
+      const response2 = await axios.post(
+        "api/upload-to-pinecone",
+        {
+          file_key,
+          file_name,
+          vectors,
+        },
+      );
+      console.log(response2.data);
 
       return response.data;
     },
@@ -58,11 +45,6 @@ const FileUpload = () => {
     try {
       const embeddings = await getEmbeddings(doc.pageContent);
       const hash = md5(doc.pageContent);
-      console.log(
-        "------------------ embeddings -----------------",
-        embeddings
-      );
-
       return {
         id: hash,
         values: embeddings,
@@ -70,7 +52,7 @@ const FileUpload = () => {
           text: doc.metadata.text,
           pageNumber: doc.metadata.pageNumber,
         },
-      } as Vector;
+      } as PineconeRecord;
     } catch (error) {
       console.log("error while embedding", error);
       throw error;
