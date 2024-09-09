@@ -1,6 +1,5 @@
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
-import { loadS3IntoPinecone } from "@/lib/pinecone";
 import { getS3Url } from "@/lib/s3";
 import { convertToAscii } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
@@ -40,12 +39,24 @@ export async function POST(req: Request, res: Response) {
     const pineconeIndex = client.Index("chat-pdf");
     console.log("Inserting vectors into Pinecone");
     const namespace = convertToAscii(file_key);
-    await pineconeIndex.namespace(namespace).upsert(fixedVectors);
+    const upsertResult = await pineconeIndex.namespace(namespace).upsert(fixedVectors);
+    console.log(upsertResult)
+    const chat_id = await db
+      .insert(chats)
+      .values({
+        fileKey: file_key,
+        pdfName: file_name,
+        pdfUrl: getS3Url(file_key),
+        userId: userId,
+      })
+      .returning({
+        insertedId: chats.id,
+      });
 
     return NextResponse.json(
       {
-        // chat_id: chat_id[0].insertedId,
-        message: "Vectors uploaded successfully",
+        chat_id: chat_id[0].insertedId,
+        message: "Chat Created successfully",
       },
       {
         status: 200,

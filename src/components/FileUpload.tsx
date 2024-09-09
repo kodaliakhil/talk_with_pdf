@@ -28,7 +28,7 @@ const FileUpload = () => {
       const documents = response.data.documents;
       const vectors = await Promise.all(documents.flat().map(embedDocument));
 
-      const response2 = await axios.post(
+      const pinecone_upload_response = await axios.post(
         "api/upload-to-pinecone",
         {
           file_key,
@@ -36,9 +36,9 @@ const FileUpload = () => {
           vectors,
         },
       );
-      console.log(response2.data);
+      console.log(pinecone_upload_response.data);
 
-      return response.data;
+      return pinecone_upload_response.data;
     },
   });
   async function embedDocument(doc: Document) {
@@ -82,7 +82,7 @@ const FileUpload = () => {
         mutate([data.file_key, data.file_name], {
           onSuccess: ({ chat_id }) => {
             toast.success("Chat created!");
-            // router.push(`/chat/${chat_id}`);
+            router.push(`/chat/${chat_id}`);
           },
           onError: (error) => {
             toast.error("Error while creating chat");
