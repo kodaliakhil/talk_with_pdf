@@ -6,7 +6,12 @@
 - @tanstack/react-query: For asyncronous State management.
 - pinecone: Vector database.
 - langchain: For loading PDF and Read the text of the PDF.
+- RAG: RAG is used to train AI model based on specific domain. (RAG vs LLM) 
 
+References:
+RAG:
+- https://techcommunity.microsoft.com/t5/educator-developer-blog/use-webgpu-onnx-runtime-web-transformer-js-to-build-rag/ba-p/4190968
+- https://huggingface.co/docs/transformers/en/model_doc/rag
 
 
 `npx drizzle-kit push` for migrating the models to DB.
