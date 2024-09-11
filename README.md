@@ -12,6 +12,11 @@ References:
 RAG:
 - https://techcommunity.microsoft.com/t5/educator-developer-blog/use-webgpu-onnx-runtime-web-transformer-js-to-build-rag/ba-p/4190968
 - https://huggingface.co/docs/transformers/en/model_doc/rag
+- https://www.youtube.com/watch?v=ztBJqzBU5kc
+
+TODO:
+- Instead of using `pinecone` as vector database use `postgres`
+- Need to Refactor code.
 
 
 `npx drizzle-kit push` for migrating the models to DB.
