@@ -1,14 +1,13 @@
 import { cn } from "@/lib/utils";
+import { Message } from "ai/react";
 import React from "react";
 
-interface Message {
-  id: number;
-  role: string;
-  content: string;
-}
+// interface Message {
+//   id: number;
+//   role: string;
+//   content: string;
+// }
 type Props = {
-  // Missing: uncomment this
-  //   messages: [];
   messages: Message[];
 };
 
