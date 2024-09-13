@@ -15,11 +15,13 @@ RAG:
 - https://techcommunity.microsoft.com/t5/educator-developer-blog/use-webgpu-onnx-runtime-web-transformer-js-to-build-rag/ba-p/4190968
 - https://huggingface.co/docs/transformers/en/model_doc/rag
 - https://www.youtube.com/watch?v=ztBJqzBU5kc
+- https://www.youtube.com/watch?v=rb9jXHto_RU
 
 TODO:
 
 - Instead of using `pinecone` as vector database use `postgres`
 - Need to Refactor code.
+- Currently we are generating embeddings in `client-side`. Need to change it to `server-side`. (check 4th point in references)
 
 `npx drizzle-kit push` for migrating the models to DB.
 `npx drizzle-kit studio` to view the data.

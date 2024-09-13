@@ -7,7 +7,7 @@ import { Send } from "lucide-react";
 import MessageList from "./MessageList";
 import { useChat } from "ai/react";
 
-type Props = {};
+type Props = { chatId: number };
 // const messages = [
 //   {
 //     id: 1,
@@ -21,10 +21,11 @@ type Props = {};
 //   },
 // ];
 
-const ChatComponent = (props: Props) => {
+const ChatComponent = ({ chatId }: Props) => {
   // Missing: need to destructure some functionalities from useChat of vercel ai SDK
   const { input, handleInputChange, handleSubmit, messages } = useChat({
     api: "/api/chat",
+    body: { chatId },
   });
   return (
     <div className="relative max-h-screen overflow-auto">
