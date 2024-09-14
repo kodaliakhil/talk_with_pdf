@@ -16,6 +16,7 @@ RAG:
 - https://huggingface.co/docs/transformers/en/model_doc/rag
 - https://www.youtube.com/watch?v=ztBJqzBU5kc
 - https://www.youtube.com/watch?v=rb9jXHto_RU
+- Question anstering using transformers.js: https://huggingface.co/docs/transformers.js/api/pipelines#pipelinesquestionansweringpipeline
 
 TODO:
 
@@ -35,6 +36,10 @@ Bucket Policy
 ![alt text](image-3.png)
 CORS
 ![alt text](image-4.png)
+
+### Track AWS Free Tier Usage
+- https://us-east-1.console.aws.amazon.com/billing/home?region=us-east-1#/freetier
+![Current Free Tier Usage stats](image-5.png)
 
 ## Pinecone Terms
 
